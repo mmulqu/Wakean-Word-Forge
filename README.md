@@ -23,21 +23,34 @@ The forge is backed by a SQLite database of 4.2M+ word entries extracted from [k
 
 ### Example workflow
 
-The LLM wants to create a Joycean portmanteau around "heaven" + "immortality":
+**Example 1**: The forge re-derives Joyce's own **"chaosmos"** (from *Finnegans Wake*):
 
-1. **Lookup**: calls `lookup_morphemes("Himmel", lang_code="de")` → gets IPA `/hɪml̩/`, etymology from Old High German
-2. **Phonetic search**: calls `phonetic_neighbors("Himmel", target_langs=["en"])` → finds "him" sounds similar
+1. **Forge**: calls `forge_portmanteau` with:
+   ```json
+   {
+     "components": [
+       {"text": "chaos", "lang": "en", "meaning": "disorder"},
+       {"text": "cosmos", "lang": "en", "meaning": "ordered universe"}
+     ]
+   }
+   ```
+   → Returns **"chaosmos"** via cross-overlap: "chaos" and "cosmos" share "os", grafted at the junction. Score: 0.50. This is Joyce's actual word from the Wake — the forge independently finds the same fusion point he did.
+
+**Example 2**: Building a multilingual thunder-word from three languages:
+
+1. **Lookup**: calls `lookup_morphemes("tonnerre", lang_code="fr")` → gets IPA `/tɔ.nɛʁ/`, etymology "from Latin tonitrus"
+2. **Phonetic search**: calls `phonetic_neighbors("thunder")` across German → finds "Donner" (IPA `/ˈdɔnɐ/`)
 3. **Forge**: calls `forge_portmanteau` with:
    ```json
    {
      "components": [
-       {"text": "Himmel", "lang": "de", "meaning": "heaven"},
-       {"text": "him", "lang": "en", "meaning": "pronoun"},
-       {"text": "immortality", "lang": "en", "meaning": "living forever"}
+       {"text": "thunder", "lang": "en", "meaning": "loud sound"},
+       {"text": "Donner", "lang": "de", "meaning": "thunder"},
+       {"text": "tonnerre", "lang": "fr", "meaning": "thunder"}
      ]
    }
    ```
-   → Returns candidates like **"Himmortality"** (Himmel grafted onto immortality at the shared "im")
+   → Returns candidates like **"thunderre"** (thunder + tonnerre, shared "er"), **"Donnerre"** (Donner + tonnerre, shared "on"), **"tonner"** (tonnerre + thunder, shared "er")
 4. The LLM picks the candidate that fits the sentence's rhythm and semantic intent
 
 ### Fusion strategies
@@ -58,8 +71,8 @@ The LLM wants to create a Joycean portmanteau around "heaven" + "immortality":
 ### 1. Clone and install dependencies
 
 ```bash
-git clone https://github.com/yourusername/Wakean_Word_Forge.git
-cd Wakean_Word_Forge
+git clone https://github.com/mmulqu/Wakean-Word-Forge.git
+cd Wakean-Word-Forge
 pip install -r requirements.txt
 ```
 
