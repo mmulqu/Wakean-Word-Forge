@@ -1,0 +1,32 @@
+# Database (users build their own via ingest.py)
+forge.db
+
+# Downloaded Wiktionary data (users download their own)
+data/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+*.egg
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Screenshots (not part of the tool)
+*.jpg
+*.png
+
+# MassGIS data (unrelated)
+massgis_data/

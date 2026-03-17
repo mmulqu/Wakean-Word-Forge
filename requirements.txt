@@ -1,0 +1,6 @@
+fastmcp>=2.0.0
+panphon
+epitran
+kaikki-to-sqlite>=0.1.0
+abydos
+jellyfish
